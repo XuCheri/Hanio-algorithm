@@ -1,12 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-19 17:34:17
- * @LastEditTime: 2021-04-21 21:51:23
+ * @LastEditTime: 2021-04-21 21:51:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \algorithm\Hanoi.md
 -->
 # 汉诺塔问题
+
+- 转载请注明出处
 
 ## A、B、C大小相形同的3根石柱，其中A石柱从下往上按照大小顺序依次摆放着n个盘子，现在需要将A石柱的盘子全部移动到C石柱上，并且每次只能移动一个圆盘，大圆盘不能放在小圆盘上，请问该如何移动？
 
