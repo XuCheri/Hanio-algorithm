@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hanoi.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<!--
+ * @Author: your name
+ * @Date: 2021-04-19 17:34:17
+ * @LastEditTime: 2021-04-20 23:42:47
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \algorithm\Hanoi.md
+-->
+<h1 id="%E6%B1%89%E8%AF%BA%E5%A1%94%E9%97%AE%E9%A2%98">汉诺塔问题</h1>
+<h2 id="abc%E5%A4%A7%E5%B0%8F%E7%9B%B8%E5%BD%A2%E5%90%8C%E7%9A%843%E6%A0%B9%E7%9F%B3%E6%9F%B1%E5%85%B6%E4%B8%ADa%E7%9F%B3%E6%9F%B1%E4%BB%8E%E4%B8%8B%E5%BE%80%E4%B8%8A%E6%8C%89%E7%85%A7%E5%A4%A7%E5%B0%8F%E9%A1%BA%E5%BA%8F%E4%BE%9D%E6%AC%A1%E6%91%86%E6%94%BE%E7%9D%80n%E4%B8%AA%E7%9B%98%E5%AD%90%E7%8E%B0%E5%9C%A8%E9%9C%80%E8%A6%81%E5%B0%86a%E7%9F%B3%E6%9F%B1%E7%9A%84%E7%9B%98%E5%AD%90%E5%85%A8%E9%83%A8%E7%A7%BB%E5%8A%A8%E5%88%B0c%E7%9F%B3%E6%9F%B1%E4%B8%8A%E5%B9%B6%E4%B8%94%E6%AF%8F%E6%AC%A1%E5%8F%AA%E8%83%BD%E7%A7%BB%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%9C%86%E7%9B%98%E5%A4%A7%E5%9C%86%E7%9B%98%E4%B8%8D%E8%83%BD%E6%94%BE%E5%9C%A8%E5%B0%8F%E5%9C%86%E7%9B%98%E4%B8%8A%E8%AF%B7%E9%97%AE%E8%AF%A5%E5%A6%82%E4%BD%95%E7%A7%BB%E5%8A%A8">A、B、C大小相形同的3根石柱，其中A石柱从下往上按照大小顺序依次摆放着n个盘子，现在需要将A石柱的盘子全部移动到C石柱上，并且每次只能移动一个圆盘，大圆盘不能放在小圆盘上，请问该如何移动？</h2>
+<p><img src = "./assets/p1.png" ></img></p>
+<h2 id="%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF">解题思路</h2>
+<ul>
+<li>
+<p><b>递归与分治</p>
+<blockquote>
+<p>这是一道递归方法的经典题目，乍一想还挺难理清头绪的，我们不妨先从简单的入手。</p>
+</blockquote>
+<blockquote>
+<p>假设 n = 1,只有一个盘子，很简单，直接把它从 A 中拿出来，移到 C 上；</p>
+</blockquote>
+<blockquote>
+<p>如果 n = 2 呢？这时候我们就要借助 B 了，因为小盘子必须时刻都在大盘子上面，共需要 4 步。<br>
+<img src = "./assets/p2.gif"></img></p>
+</blockquote>
+<blockquote>
+<p>如果 n &gt; 2 呢？思路和上面是一样的，我们把 n 个盘子也看成两个部分，一部分有 1 个盘子，另一部分有 n - 1 个盘子。<br>
+<img src = "./assets/p3.gif"></img></p>
+</blockquote>
+<blockquote>
+<p>观察上图，你可能会问：“那 n - 1 个盘子是怎么从 A 移到 C 的呢？<br>
+注意，当你在思考这个问题的时候，就将最初的 n 个盘子从 A 移到 C 的问题，转化成了将 n - 1 个盘子从 A 移到 C 的问题， 依次类推，直至转化成 1 个盘子的问题时，问题也就解决了。这就是分治的思想。</p>
+</blockquote>
+<blockquote>
+<p>而实现分治思想的常用方法就是递归。不难发现，如果原问题可以分解成若干个与原问题结构相同但规模较小的子问题时，往往可以用递归的方法解决。具体解决办法如下：</p>
+</blockquote>
+<ul>
+<li>n = 1 时，直接把盘子从 A 移到 C；</li>
+<li>n &gt; 1 时:
+<ul>
+<li>先把上面 n - 1 个盘子从 A 移到 B（子问题，递归）；</li>
+<li>再将最大的盘子从 A 移到 C；</li>
+<li>再将 B 上 n - 1 个盘子从 B 移到 C（子问题，递归）。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>代码实现</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Hanoi</span>(<span class="hljs-params">A, B, C</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`A:<span class="hljs-subst">${A}</span>\nB:<span class="hljs-subst">${B}</span>\nC:<span class="hljs-subst">${C}</span>\n`</span>);<span class="hljs-comment">//输出ABC</span>
+    <span class="hljs-keyword">let</span> n = A.length;
+    <span class="hljs-keyword">let</span> move = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">length, a, b, c</span>) </span>{
+        <span class="hljs-comment">//定义一个方法，含义是将a上的n个盘子通过b移动到c</span>
+
+        <span class="hljs-keyword">if</span> (length === <span class="hljs-number">1</span>) { 
+            <span class="hljs-comment">// 当只有一个时直接加到c中</span>
+            c.push(a.pop())
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`A:<span class="hljs-subst">${A}</span>\nB:<span class="hljs-subst">${B}</span>\nC:<span class="hljs-subst">${C}</span>\n`</span>);
+        } <span class="hljs-keyword">else</span> {
+            move(length - <span class="hljs-number">1</span>, a, c, b) <span class="hljs-comment">// 将 a 上的 n - 1 个 通过 c 移到 b</span>
+
+            c.push(a.pop()) <span class="hljs-comment">// 把 a 中剩下的一个直接放到 c</span>
+
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`A:<span class="hljs-subst">${A}</span>\nB:<span class="hljs-subst">${B}</span>\nC:<span class="hljs-subst">${C}</span>\n`</span>);
+        
+            move(length - <span class="hljs-number">1</span>, b, a, c) <span class="hljs-comment">// 在把 b 上的 n - 1 个 通过 a 放到 c</span>
+        }
+    }
+    move(n, A, B, C)
+}
+</div></code></pre>
+<blockquote>
+<p>输出的结果<br>
+<img src = "./assets/p4.png"></p>
+</blockquote>
+</li>
+</ul>
+<br>
+<br>
+<ul>
+<li><b>非递归算法</li>
+</ul>
+<blockquote>
+<ol>
+<li>将三根柱子按顺序排成品字型，若 [公式] 为偶数，按顺时针方向依次摆放A、B、C；若 [公式] 为奇数，按顺时针方向依次摆放A、C、B。</li>
+<li>把圆盘1从现在的柱子移动到顺时针方向的下一根柱。</li>
+<li>接着，把另外两根柱上可以移动的圆盘移动到新的柱上（事实上只有唯一的选择）。</li>
+<li>如果没有达到目标要求，则返回步骤2。</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>下面列出n=3的情况图解</p>
+</blockquote>
+<img src = "./assets/p9.png">
+<img src = "./assets/p10.png">
+<img src = "./assets/p11.png">
+<img src = "./assets/p12.png">
+<blockquote>
+<p>代码实现</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> step = <span class="hljs-number">0</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PrintMoveOnePlate</span>(<span class="hljs-params">n, loca1, loca2</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"第"</span> + ++step + <span class="hljs-string">"步：移动第"</span> + n + <span class="hljs-string">"个盘子，从"</span> + loca1 + <span class="hljs-string">"到"</span> + loca2 + <span class="hljs-string">"\n"</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MovePlates</span>(<span class="hljs-params">n, s, m, d</span>) </span>{
+    <span class="hljs-comment">//定义位置  </span>
+    <span class="hljs-keyword">var</span> loop = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-number">3</span>);
+    loop[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(n);
+    loop[<span class="hljs-number">1</span>] = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(n);
+    loop[<span class="hljs-number">2</span>] = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(n);
+    <span class="hljs-comment">//定义位置描述字符串数组(n为偶数的情况)  </span>
+    <span class="hljs-keyword">var</span> loca = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(s, m, d);
+    <span class="hljs-keyword">if</span> (n % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>) <span class="hljs-comment">//n为奇数的情况  </span>
+    {
+        loca[<span class="hljs-number">1</span>] = d;
+        loca[<span class="hljs-number">2</span>] = m;
+    }
+    <span class="hljs-comment">//初始化源位置上的盘子  </span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+        loop[<span class="hljs-number">0</span>][i] = n - i;
+    <span class="hljs-comment">//记录各个位置上盘子的数量  </span>
+    <span class="hljs-keyword">var</span> loopLen = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(n, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">var</span> count = <span class="hljs-built_in">Math</span>.pow(<span class="hljs-number">2</span>, n) - <span class="hljs-number">1</span>; <span class="hljs-comment">//移动次数，即循环退出条件  </span>
+    <span class="hljs-keyword">var</span> firstPlate = <span class="hljs-number">0</span>; <span class="hljs-comment">//1号盘子的位置  </span>
+    <span class="hljs-keyword">do</span> {
+        <span class="hljs-comment">//将1号盘子顺时针移动到后1个位置  </span>
+        PrintMoveOnePlate(<span class="hljs-number">1</span>, loca[firstPlate], loca[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>]); <span class="hljs-comment">//显示移动过程  </span>
+        loop[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>][loopLen[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>]] = <span class="hljs-number">1</span>; <span class="hljs-comment">//移动  </span>
+        loopLen[firstPlate]--; <span class="hljs-comment">//修改1号盘子旧位置上盘子的数量  </span>
+        firstPlate = (firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>; <span class="hljs-comment">//修改1号盘子的位置  </span>
+        loopLen[firstPlate]++; <span class="hljs-comment">//修改1号盘子新位置上盘子的数量  </span>
+        count--; <span class="hljs-comment">//记录移动次数  </span>
+        <span class="hljs-comment">//移动另外的两个位置上的盘子  </span>
+        <span class="hljs-keyword">if</span> (count != <span class="hljs-number">0</span>) <span class="hljs-comment">//避免最后一次移动后仍然移动而导致错误  </span>
+        {
+            <span class="hljs-comment">//确定另外两个位置如何移动  </span>
+            <span class="hljs-keyword">if</span> (loopLen[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>] == <span class="hljs-number">0</span> || loopLen[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>] != <span class="hljs-number">0</span> &amp;&amp;
+                loop[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>][loopLen[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>] - <span class="hljs-number">1</span>] &lt; loop[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>][loopLen[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>] - <span class="hljs-number">1</span>]) { <span class="hljs-comment">//1号盘子的后第1个位置为空，或者无空位置且1号盘子后第2个位置编号较小，此时将1号盘子后第2个位置的盘子移动到1号盘子后第1个位置上  </span>
+                PrintMoveOnePlate(loop[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>][loopLen[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>] - <span class="hljs-number">1</span>], loca[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>], loca[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>]); <span class="hljs-comment">//显示移动过程  </span>
+                loop[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>][loopLen[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>]] = loop[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>][loopLen[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>] - <span class="hljs-number">1</span>]; <span class="hljs-comment">//移动  </span>
+                loopLen[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>]--; <span class="hljs-comment">//修改该盘子旧位置上盘子的数量  </span>
+                loopLen[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>]++; <span class="hljs-comment">//修改该盘子新位置上盘子的数量  </span>
+            } <span class="hljs-keyword">else</span> { <span class="hljs-comment">//1号盘子的后第2个位置为空，或者无空位置且1号盘子后第1个位置编号较小，此时将1号盘子后第1个位置的盘子移动到1号盘子后第2个位置上  </span>
+                PrintMoveOnePlate(loop[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>][loopLen[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>] - <span class="hljs-number">1</span>], loca[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>], loca[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>]); <span class="hljs-comment">//显示移动过程  </span>
+                loop[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>][loopLen[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>]] = loop[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>][loopLen[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>] - <span class="hljs-number">1</span>]; <span class="hljs-comment">//移动  </span>
+                loopLen[(firstPlate + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>]--; <span class="hljs-comment">//修改该盘子旧位置上盘子的数量  </span>
+                loopLen[(firstPlate + <span class="hljs-number">2</span>) % <span class="hljs-number">3</span>]++; <span class="hljs-comment">//修改该盘子新位置上盘子的数量  </span>
+            }
+            count--; <span class="hljs-comment">//记录移动次数  </span>
+        }
+    } <span class="hljs-keyword">while</span> (count != <span class="hljs-number">0</span>)
+}
+
+MovePlates(<span class="hljs-number">3</span>, <span class="hljs-string">"A"</span>, <span class="hljs-string">"B"</span>, <span class="hljs-string">"C"</span>)
+</div></code></pre>
+<blockquote>
+<p>输出展示<br>
+<img src = "./assets/p5.png"></p>
+</blockquote>
+<ul>
+<li><b> 非递归算法2 : 遍历二叉树搜索解空间</li>
+</ul>
+<blockquote>
+<p>从汉诺塔的递归算法中可知：</p>
+</blockquote>
+<blockquote>
+<p>当盘子的个数大于2时，汉诺塔的移动过程分为3步</p>
+</blockquote>
+<ul>
+<li>第一步将n-1个盘从A移到C;</li>
+<li>第二步将第n盘从A移到B;</li>
+<li>第三步将n-1个盘从C移到B。</li>
+</ul>
+<blockquote>
+<p>如果把移动过程看作是二叉树的中序遍历，则可用二叉树与汉诺塔移动过程建立一个映射[2，3]。<br>
+如图所示，三阶盘数，所对应的移动过程共有3!=6种移动方法。即:A→B ,A →C, B→C,B→A，C→A,C→B 6种移动方法.</p>
+</blockquote>
+<img src = "./assets/p6.png">
+<blockquote>
+<p>在构造解空间树的时候，遵循由初始塔→目标塔，分解为两部分:初始塔→和中转塔→目标塔。如图所示构造n阶汉诺塔问题的解空间树与对应的解。依次类推一直到达叶节点生成满二叉树。最后对生成的二叉树中序遍历，每搜索一个结点，对应的输出它的映射值，例如:搜索到0号结点，则输出A→B，搜索到3号结点，则输出B→A，搜索到5号结点，则输出C→B.依次类推直到解空间树中所有结点搜索完成，算法结束。\</p>
+</blockquote>
+<img src = "./assets/p7.png">
+<img src = "./assets/p8.png">
+<blockquote>
+<p>下面给出它的中序遍历算法。将二叉树严格按照左子树在左，右子树在右画，中序遍历的结果应该是结点从左到右的一个排列。由于它是满二叉树，整个输出过程是，先输出最下层的一个结点，然后，输出上层中第一个左子树能包含该结点的结点，然后，再输出下层的下一个结点，再输出上层中第一个左子树能包含该结点的结点，直到下层的结点全部输出完为止。用一维数level_position[]存储某一层已输出的结点序号。由于该二叉树是满二叉树，上层第i个结点的左孩子一定是下层的第2i-1个结点，右孩子一定是下层的第2i个结点。这样,判断下层结点是否是上层结点的右孩子，只要判断上下层结点在其本层的编号是否构成2倍关系即可，整个算法程序实现如下:</p>
+</blockquote>
+<blockquote>
+<p>代码实现</p>
+</blockquote>
+<pre class="hljs"><code><div>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">output</span>(<span class="hljs-params">presentLevel, position, n</span>) </span>{
+    <span class="hljs-keyword">var</span> val;
+    val = (position - <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>;
+    <span class="hljs-keyword">if</span> (presentLevel % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>) {
+        val = val + <span class="hljs-number">3</span>;
+    }
+    <span class="hljs-comment">// 如果是奇数层，其值为3，4，5</span>
+    <span class="hljs-keyword">switch</span> (val) {
+        <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${val}</span>from A---&gt;B\n`</span>, n - presentLevel + <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${val}</span>from B---&gt;C\n`</span>, n - presentLevel + <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${val}</span>from C---&gt;A\n`</span>, n - presentLevel + <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${val}</span>from A ---&gt;C\n`</span>, n - presentLevel + <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${val}</span>from C---&gt;B\n`</span>, n - presentLevel + <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${val}</span>from B---&gt;A\n`</span>, n - presentLevel + <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">break</span>;
+
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params">n</span>) </span>{
+    <span class="hljs-keyword">var</span> level_position = [], <span class="hljs-comment">//某层的已输出的结点序号</span>
+        i,
+        sample_nub, <span class="hljs-comment">//最后一层已输个数</span>
+        total_sample; <span class="hljs-comment">//总个数</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"\n"</span>);
+    sample_nub = <span class="hljs-number">0</span>;
+    total_sample = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; i &lt; n; i++) 
+        total_sample *= <span class="hljs-number">2</span>;
+    <span class="hljs-comment">//最底层总样点数</span>
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt;= n; i++) {
+        level_position[i] = <span class="hljs-number">0</span>;
+        i = n;
+        level_position[i]++;
+        output(i, level_position[n], n) <span class="hljs-comment">//输出第i层某一序号的结点sample_nub++;</span>
+    }
+    <span class="hljs-keyword">while</span> (sample_nub &lt; total_sample) {
+        <span class="hljs-keyword">while</span> (level_position[i] == <span class="hljs-number">2</span> * level_position[i - <span class="hljs-number">1</span>]) 
+            i--;
+        
+        <span class="hljs-comment">//寻找把该结点作为左子树的祖先结点</span>
+        level_position[i - <span class="hljs-number">1</span>]++;
+        output(i - <span class="hljs-number">1</span>, level_position[i - <span class="hljs-number">1</span>], n);
+        i = n;
+        level_position[i]++;
+        output(i, level_position[n], n);
+        sample_nub++;
+    }
+}
+</div></code></pre>
+<ul>
+<li>非递归解法3：二进制</li>
+</ul>
+<blockquote>
+<p>对于有 n个盘子的汉诺塔问题，按序写出所有 n 位普通二进制码 $B_n$$B_{n-1}$$...$$B_2$$B_1$，自左而右标记为第 n 位、第 n-1 位、…第2位、第1位。则 min(k|i= $B_n$$B_{n-1}$$...$$B_2$$B_1$) 表示第i步移动 k 号盘子。</p>
+</blockquote>
+<blockquote>
+<p>对于最小的盘子而言，总是有两种移动的可能性。若 n 为偶数，最小的盘子的移动次序是A→B→C→A→…；若 n 为奇数，最小的盘子的移动次序是A→C→B→A→…。<br>
+对于其他盘子，总是有唯一的移动可能性。<br>
+n=4的情况见下表。</p>
+</blockquote>
+<img src = "./assets/p13.png">
+<blockquote>
+<p>感兴趣的自己用代码实现</p>
+</blockquote>
+<h2 id="%E6%B1%89%E8%AF%BA%E5%A1%94%E7%9A%84%E6%8B%93%E5%B1%95">汉诺塔的拓展</h2>
+<blockquote>
+<p>思考题:如果塔的个数变为a,b,c,d四个，现要将n个圆盘从a全部移动到d，移动规则不变，求移动步数最小的方案。</p>
+</blockquote>
+<blockquote>
+<p>首先我们可以先考虑A柱子上面只有三个盘子的情况，对于A柱子上的三个盘子，我们可以先将一个盘子从A柱子移动到B柱子上面，再将第二个盘子移动到C柱子上面，最后将剩下的一个盘子移动到D柱子上面。其实对于这个过程，我们可以将其看成：首先将A柱子上面的盘子分成了两部分，第一部分上面只有一个盘子，第二部分有两个盘子，我们要做的就是先将第一部分的盘子移动到B（C也可以）柱子上面，然后将剩下的盘子移动到D柱子上面，在将B柱子上面的盘子移动到D柱子上面。</p>
+</blockquote>
+<blockquote>
+<p>因此算法的主要的思路就是：</p>
+<ul>
+<li>1，对于A柱子上面有n个盘子的时候，我们可以先将盘子分成k和n-k两个部分</li>
+<li>2，将A柱子上面的K个盘子使用Hanoi4方法将其借助C,D柱子移动到B柱子上面</li>
+<li>3，将A柱子上面剩下的n-k个盘子使用Hanoi3方法将其借助C柱子移动到D柱子上面</li>
+<li>4，将B柱子上面的K个盘子使用Hanoi4方法将其移动到D柱子上面</li>
+</ul>
+</blockquote>
+
+</body>
+</html>
